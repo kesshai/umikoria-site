@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
-"""
-app.py
 
-Web-приложение на Flask для пикселизации изображений:
-- AJAX-превью «orig / mid / after»
-- Dither, шумоподавление, posterize, outline
-- Слияние похожих цветов
-- Валидация параметров и защита от ошибок
-"""
 import os
 from io import BytesIO
 from flask import Flask, render_template, request, jsonify

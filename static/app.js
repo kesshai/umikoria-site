@@ -23,7 +23,6 @@ function toggleSettings(enabled) {
 
 toggleSettings(false);
 
-// загрузить палитры и заполнить селект
 fetch("/static/palettes.json")
    .then((r) => r.json())
    .then((list) => {

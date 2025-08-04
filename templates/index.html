@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Pixel Art Pixelizer</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Umikoria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <div class="container">
         <header class="app-header">
-            <img src="../static/img/logo.png" alt="" class="header-logo">
+<img src="{{ url_for('static', filename='img/logo.png') }}"
+     alt="" class="header-logo">
         </header>
         <div class="content-container">
             <div class="form-container">
@@ -154,7 +155,7 @@
             </div>
         </div>
     </div>
-    <script src="/static/app.js"></script>
+   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 
 </html>
