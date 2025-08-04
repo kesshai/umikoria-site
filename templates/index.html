@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel Art Pixelizer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="app-header">
+            <img src="../static/img/logo.png" alt="" class="header-logo">
+        </header>
+        <div class="content-container">
+            <div class="form-container">
+                <form id="pixelForm" class="controls-grid">
+                    <div class="style-box1"></div>
+                    <div class="style-box2"></div>
+                    <div class="input-container">
+                        <div class="control-group select">
+                            <label for="imageInput">select Image</label>
+                            <input type="file" name="image" id="imageInput" accept="image/*" required hidden>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="control-group">
+                            <label for="paletteSelect">Palette</label>
+                            <select name="palette" id="paletteSelect" disabled></select>
+                        </div>
+                        <div class="control-group">
+                            <label for="scaleInput">Scale</label>
+                            <input type="number" name="scale" id="scaleInput" value="8" min="1" disabled>
+                        </div>
+                        <div class="control-group">
+                            <label for="colorsInput">Colors</label>
+                            <input type="number" name="colors" id="colorsInput" value="16" min="2" disabled>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="control-group">
+                            <label for="threshInput">Outline Thresh</label>
+                            <input type="number" name="outline_threshold" id="threshInput" value="40" min="0" max="255"
+                                disabled>
+                        </div>
+                        <div class="control-group">
+                            <label for="dilateInput">Outline Dilate</label>
+                            <input type="number" name="outline_dilate" id="dilateInput" value="3" min="1" max="15"
+                                disabled>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="control-group">
+                            <label for="noiseInput">Noise Radius</label>
+                            <input type="number" name="noise_radius" id="noiseInput" value="0" min="0" max="15"
+                                step="0.1" disabled>
+                        </div>
+                        <div class="control-group">
+                            <label for="posterizeInput">Posterize Bits</label>
+                            <input type="number" name="posterize_bits" id="posterizeInput" value="8" min="1" max="8"
+                                disabled>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="control-group">
+                            <label for="brightnessInput">Brightness</label>
+                            <input type="number" name="brightness" id="brightnessInput" value="1" min="0" max="5"
+                                step="0.1" disabled>
+                        </div>
+                        <div class="control-group">
+                            <label for="saturationInput">Saturation</label>
+                            <input type="number" name="saturation" id="saturationInput" value="1" min="0" max="5"
+                                step="0.1" disabled>
+                        </div>
+                        <div class="control-group">
+                            <label for="contrastInput">Contrast</label>
+                            <input type="number" name="contrast" id="contrastInput" value="1" min="0" max="5" step="0.1"
+                                disabled>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="dither" id="ditherInput" disabled>Dither</label>
+                        </div>
+                        <div class="control-group">
+                            <label for="mergeInput">Merge Delta</label>
+                            <input type="number" name="merge_delta" id="mergeInput" value="0" min="0" max="100"
+                                disabled>
+                        </div>
+                        <span class="dashes">======================</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="auto_palette" id="autoPaletteInput" disabled> Auto
+                                Palette</label>
+                        </div>
+                        <div class="control-group">
+                            <label for="autoPaletteMaxInput">a.Palette Max</label>
+                            <input type="number" name="auto_palette_max" id="autoPaletteMaxInput" value="128" min="2"
+                                max="256" disabled>
+                        </div>
+                    </div>
+                </form>
+                <a id="resetLink" class="btn" href="#">
+                    <div class="btn-box1"></div>
+                    <div class="btn-box2"></div>
+                    Reset
+                    <span>Reset</span>
+                </a>
+                <a id="downloadLink" class="btn download" href="#" download="pixelated.png">
+                    <div class="btn-box1"></div>
+                    <div class="btn-box2"></div>
+                    Download
+                    <span>Download</span>
+                </a>
+            </div>
+            <div class="right-column">
+                <div class="preview-area">
+                    <div class="preview-box">
+                        <div class="style-box1"></div>
+                        <div class="style-box2"></div>
+                        <h2 class="main">AFTER</h2>
+                        <div class="img-wrapper">
+                            <img id="afterImg">
+                        </div>
+                    </div>
+                    <div class="preview-box">
+                        <div class="style-box1"></div>
+                        <div class="style-box2"></div>
+                        <h2>OG</h2>
+                        <div class="img-wrapper">
+                            <img id="origImg">
+                        </div>
+                    </div>
+                    <div class="preview-box">
+                        <div class="style-box1"></div>
+                        <div class="style-box2"></div>
+                        <h2>MID</h2>
+                        <div class="img-wrapper">
+                            <img id="midImg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="finish">
+                    <div class="finish-info">
+                        <div class="zoom-container">
+                            <div class="zoom-style-box1"></div>
+                            <div class="zoom-style-box2"></div>
+                            <input type="range" id="zoomSlider" min="0.5" max="5" step="0.1" value="1">
+                        </div>
+                        <div id="errorBox" class="error"></div>
+                    </div>
+                    <div class="credits">
+                        created & designed: <a href="https://t.me/venterokk">VENTEROK</a><br>
+                        made up: <a href="https://t.me/defesye_photo">DEFERSYE</a><br>
+                        <br>
+                        <i><b>buhen haus & venterok 2025</b></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
